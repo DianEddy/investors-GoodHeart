@@ -1,0 +1,6 @@
+{
+  "name": "GOODHEART Pitch Landing Page",
+  "description": "Pitch deck landing page for Goodheart - Redefining Wardrobe Wellness & Decentralized Fashion Tech.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
