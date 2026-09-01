@@ -26,13 +26,13 @@ export const PageThree: React.FC<PageThreeProps> = ({
   onOpenAssetManager,
 }) => {
   const [activeHighlight, setActiveHighlight] = useState<number | null>(null);
-  const [showTaggedOverlay, setShowTaggedOverlay] = useState(true);
+  const [isTaggedUnveiled, setIsTaggedUnveiled] = useState(false);
 
   const taggedItems = [
-    { id: 1, name: 'Navy Pinstripe Cropped Blazer', img: assets.header1, price: '$480' },
-    { id: 2, name: 'Pinstripe Asymmetric Wrap Skirt', img: assets.header2, price: '$340' },
-    { id: 3, name: 'Structured Monogram Envelope Bag', img: assets.header3, price: '$620' },
-    { id: 4, name: 'Patent Pointed Bow Pumps in Scarlet', img: assets.header4, price: '$290' },
+    { id: 1, name: 'Navy Pinstripe Cropped Blazer', tag: 'Top / Blazer (Asset 2)', img: assets.header1, price: '$480', category: 'Tailored Outerwear' },
+    { id: 2, name: 'Pinstripe Asymmetric Wrap Skirt', tag: 'Skirt (Asset 3)', img: assets.header2, price: '$340', category: 'Bespoke Separates' },
+    { id: 3, name: 'Structured Monogram Envelope Bag', tag: 'Luxury Handbag (Asset 4)', img: assets.header3, price: '$620', category: 'Leather Goods' },
+    { id: 4, name: 'Patent Pointed Bow Pumps in Scarlet', tag: 'Pointed Heels (Asset 5)', img: assets.header4, price: '$290', category: 'Artisan Footwear' },
   ];
 
   return (
@@ -40,99 +40,40 @@ export const PageThree: React.FC<PageThreeProps> = ({
       {/* ========================================================
           TOP SECTION: Golden Yellow Banner + Founder & Tagged Items
           ======================================================== */}
-      <header className="bg-[#FBB040] pt-4 pb-6 px-4 sm:px-6 relative">
+      <header className="bg-[#FBB040] pt-4 pb-6 px-3 sm:px-5 relative overflow-hidden">
         {/* Top Black Pill Badge */}
-        <div className="flex justify-center mb-4">
-          <div className="bg-black text-white px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-extrabold text-center tracking-tight shadow-xs max-w-[520px]">
+        <div className="flex justify-center mb-3">
+          <div className="bg-black text-white px-4 py-1.5 rounded-full text-[9.5px] sm:text-[10.5px] font-extrabold text-center tracking-tight shadow-xs max-w-[540px]">
             Onyi developed GoodHeart's Proprietary Single-Picture-Multiple-Garment (SPMG) Technology
           </div>
         </div>
 
-        {/* Founder & 4 Tagged Header Circles Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4 items-center">
-          {/* Left Column: 4 Circular Header Images & Bio */}
-          <div className="sm:col-span-6 flex flex-col justify-between h-full">
-            {/* Top row with 4 circular items arranged neatly */}
-            <div className="relative w-full h-[180px] sm:h-[190px] mb-2">
-              {/* Circle 1: Blazer */}
-              <div 
-                onMouseEnter={() => setActiveHighlight(1)}
-                onMouseLeave={() => setActiveHighlight(null)}
-                className={`absolute top-0 left-2 sm:left-4 w-20 h-20 sm:w-22 sm:h-22 rounded-full border-2 border-black bg-white p-1.5 flex items-center justify-center shadow-xs cursor-pointer transition-transform hover:scale-108 z-20 ${
-                  activeHighlight === 1 ? 'ring-3 ring-black scale-108' : ''
-                }`}
-                title="1. Cropped Pinstripe Blazer"
-              >
-                <img
-                  src={assets.header1}
-                  alt="Cropped Pinstripe Blazer"
-                  className="w-full h-full object-contain mix-blend-multiply"
-                />
-              </div>
+        {/* Founder & Meet Our Founder Section Row */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+          {/* Left Column: Meet Our Founder Title, Bio & SPMG Overview */}
+          <div className="md:col-span-6 flex flex-col justify-center space-y-3 py-1">
+            <h2 className="text-3xl sm:text-4xl font-black text-black tracking-tight leading-none">
+              Meet Our<br />Founder
+            </h2>
+            <p className="text-xs sm:text-[13px] text-black leading-relaxed font-normal">
+              In its inaugural year, Onyinye Egbueje led Goodheart in developing its proprietary <strong className="font-extrabold">Single-Picture-Multiple-Garment (SPMG)</strong> technology—revolutionizing the digital closet and resale space.
+            </p>
+            <p className="text-[11px] sm:text-xs text-neutral-800 leading-snug font-medium bg-white/60 p-2.5 rounded-xl border border-black/15">
+              With a single full-body photo, SPMG neural segmentation automatically identifies, segments, tags, and catalogs each individual wardrobe piece into an actionable, shoppable closet asset.
+            </p>
 
-              {/* Circle 2: Skirt */}
-              <div 
-                onMouseEnter={() => setActiveHighlight(2)}
-                onMouseLeave={() => setActiveHighlight(null)}
-                className={`absolute top-14 left-0 sm:left-2 w-20 h-20 sm:w-22 sm:h-22 rounded-full border-2 border-black bg-white p-1.5 flex items-center justify-center shadow-xs cursor-pointer transition-transform hover:scale-108 z-10 ${
-                  activeHighlight === 2 ? 'ring-3 ring-black scale-108' : ''
-                }`}
-                title="2. Pinstripe Wrap Skirt"
-              >
-                <img
-                  src={assets.header2}
-                  alt="Pinstripe Wrap Skirt"
-                  className="w-full h-full object-contain mix-blend-multiply"
-                />
+            {/* Interactive Status Indicator when unveiled */}
+            {isTaggedUnveiled && (
+              <div className="inline-flex items-center gap-1.5 bg-black text-white px-3 py-1.5 rounded-full text-[10px] font-extrabold shadow-xs self-start animate-fade-in">
+                <Sparkles className="w-3.5 h-3.5 text-[#FBB040]" />
+                <span>SPMG 4-Item Extraction Active</span>
               </div>
-
-              {/* Circle 3: Bag */}
-              <div 
-                onMouseEnter={() => setActiveHighlight(3)}
-                onMouseLeave={() => setActiveHighlight(null)}
-                className={`absolute bottom-0 left-12 sm:left-14 w-18 h-18 sm:w-20 sm:h-20 rounded-full border-2 border-black bg-white p-1.5 flex items-center justify-center shadow-xs cursor-pointer transition-transform hover:scale-108 z-20 ${
-                  activeHighlight === 3 ? 'ring-3 ring-black scale-108' : ''
-                }`}
-                title="3. Luxury Bag"
-              >
-                <img
-                  src={assets.header3}
-                  alt="Luxury Envelope Handbag"
-                  className="w-full h-full object-contain mix-blend-multiply"
-                />
-              </div>
-
-              {/* Circle 4: Red Heels */}
-              <div 
-                onMouseEnter={() => setActiveHighlight(4)}
-                onMouseLeave={() => setActiveHighlight(null)}
-                className={`absolute bottom-0 right-2 sm:right-4 w-18 h-18 sm:w-20 sm:h-20 rounded-full border-2 border-black bg-white p-1.5 flex items-center justify-center shadow-xs cursor-pointer transition-transform hover:scale-108 z-20 ${
-                  activeHighlight === 4 ? 'ring-3 ring-black scale-108' : ''
-                }`}
-                title="4. Red Bow Heels"
-              >
-                <img
-                  src={assets.header4}
-                  alt="Red Bow Pointed Heels"
-                  className="w-full h-full object-contain mix-blend-multiply"
-                />
-              </div>
-            </div>
-
-            {/* Meet Our Founder Text */}
-            <div className="px-1 text-left">
-              <h2 className="text-3xl sm:text-4xl font-black text-black tracking-tight leading-none mb-2">
-                Meet Our<br />Founder
-              </h2>
-              <p className="text-[11px] sm:text-xs text-black leading-snug font-normal">
-                In its inaugural year, Onyinye Egbueje led Goodheart in developing its proprietary Single-Picture-Multiple-Garment (SPMG) technology—revolutionizing the digital closet and resale space.
-              </p>
-            </div>
+            )}
           </div>
 
           {/* Right Column: Founder Skyscraper Photo & Tagged Item Interactive Badge */}
-          <div className="sm:col-span-6">
-            <div className="relative w-full aspect-4/5 rounded-[32px] border-2 border-black overflow-hidden shadow-lg bg-neutral-900 group">
+          <div className="md:col-span-6">
+            <div className="relative w-full aspect-4/5 rounded-[36px] border-2 border-black overflow-hidden shadow-lg bg-neutral-900 group">
               {assets.founderHeroVideo ? (
                 <video
                   src={assets.founderHeroVideo}
@@ -151,17 +92,151 @@ export const PageThree: React.FC<PageThreeProps> = ({
                 />
               )}
 
-              {/* Tagged Overlay Pill */}
-              <div 
-                onClick={() => setShowTaggedOverlay(!showTaggedOverlay)}
-                className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/85 hover:bg-black text-white text-[11px] font-bold px-3.5 py-1.5 rounded-full flex items-center gap-2 border border-white/20 cursor-pointer shadow-md backdrop-blur-xs transition whitespace-nowrap"
+              {/* Tagged Hotspots Pin Overlays on the founder's outfit */}
+              {isTaggedUnveiled && (
+                <>
+                  {/* Pin 1: Blazer */}
+                  <div 
+                    onClick={() => setActiveHighlight(1)}
+                    className="absolute top-[28%] left-[45%] -translate-x-1/2 -translate-y-1/2 cursor-pointer z-30 group/pin"
+                  >
+                    <div className="relative flex items-center justify-center">
+                      <span className="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-[#FA383E] opacity-75"></span>
+                      <span className="relative flex items-center justify-center w-6 h-6 rounded-full bg-[#FA383E] text-white text-[10px] font-black border-2 border-white shadow-md">
+                        1
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Pin 2: Skirt */}
+                  <div 
+                    onClick={() => setActiveHighlight(2)}
+                    className="absolute top-[52%] left-[48%] -translate-x-1/2 -translate-y-1/2 cursor-pointer z-30 group/pin"
+                  >
+                    <div className="relative flex items-center justify-center">
+                      <span className="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-[#FA383E] opacity-75"></span>
+                      <span className="relative flex items-center justify-center w-6 h-6 rounded-full bg-[#FA383E] text-white text-[10px] font-black border-2 border-white shadow-md">
+                        2
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Pin 3: Bag */}
+                  <div 
+                    onClick={() => setActiveHighlight(3)}
+                    className="absolute top-[58%] right-[18%] -translate-x-1/2 -translate-y-1/2 cursor-pointer z-30 group/pin"
+                  >
+                    <div className="relative flex items-center justify-center">
+                      <span className="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-[#FA383E] opacity-75"></span>
+                      <span className="relative flex items-center justify-center w-6 h-6 rounded-full bg-[#FA383E] text-white text-[10px] font-black border-2 border-white shadow-md">
+                        3
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Pin 4: Shoes */}
+                  <div 
+                    onClick={() => setActiveHighlight(4)}
+                    className="absolute bottom-[16%] left-[48%] -translate-x-1/2 -translate-y-1/2 cursor-pointer z-30 group/pin"
+                  >
+                    <div className="relative flex items-center justify-center">
+                      <span className="animate-ping absolute inline-flex h-7 w-7 rounded-full bg-[#FA383E] opacity-75"></span>
+                      <span className="relative flex items-center justify-center w-6 h-6 rounded-full bg-[#FA383E] text-white text-[10px] font-black border-2 border-white shadow-md">
+                        4
+                      </span>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* Tagged Overlay Pill Toggle Button */}
+              <button 
+                type="button"
+                onClick={() => setIsTaggedUnveiled(!isTaggedUnveiled)}
+                className={`absolute bottom-3 left-3 text-white text-[10px] sm:text-[11px] font-extrabold px-3 py-1.5 rounded-full flex items-center gap-2 border cursor-pointer shadow-lg backdrop-blur-md transition-all duration-300 z-40 ${
+                  isTaggedUnveiled 
+                    ? 'bg-[#FA383E] border-white scale-102 ring-2 ring-white/50' 
+                    : 'bg-black/90 hover:bg-black border-white/20 hover:scale-102'
+                }`}
+                title="Tap to unveil 4 tagged items from the photo"
               >
-                <span className="w-2.5 h-2.5 rounded-full bg-[#FA383E] animate-pulse"></span>
-                <span>Tap to view 4 tagged items</span>
-              </div>
+                <span className="w-3.5 h-3.5 rounded-full bg-white/20 flex items-center justify-center">
+                  <span className={`w-1.5 h-1.5 rounded-full ${isTaggedUnveiled ? 'bg-white' : 'bg-[#FA383E] animate-pulse'}`}></span>
+                </span>
+                <span>{isTaggedUnveiled ? '✓ 4 Items Unveiled (Tap to close)' : 'Tap to view 4 tagged items'}</span>
+              </button>
             </div>
           </div>
         </div>
+
+        {/* ========================================================
+            UNVEILED 4-ITEM SPMG EXTRACTION DRAWER / BANNER
+            ======================================================== */}
+        {isTaggedUnveiled && (
+          <div className="mt-4 pt-3 pb-1 border-t-2 border-dashed border-black/30 animate-fade-in">
+            <div className="flex items-center justify-between mb-2.5">
+              <div className="flex items-center gap-1.5 text-xs font-black text-black uppercase tracking-tight">
+                <Tag className="w-3.5 h-3.5 text-[#FA383E]" />
+                <span>SPMG 1-Photo Tagged Wardrobe Items (Unveiled)</span>
+              </div>
+              <span className="text-[10px] font-bold text-neutral-800 bg-white/80 px-2 py-0.5 rounded-full border border-black/15">
+                Extracted via SPMG Neural Vision
+              </span>
+            </div>
+
+            {/* 4 Unveiled Item Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {taggedItems.map((item) => (
+                <div
+                  key={item.id}
+                  onMouseEnter={() => setActiveHighlight(item.id)}
+                  onMouseLeave={() => setActiveHighlight(null)}
+                  className={`bg-white rounded-xl p-2.5 border-2 border-black flex flex-col justify-between transition-all duration-200 shadow-xs cursor-pointer ${
+                    activeHighlight === item.id ? 'ring-3 ring-black scale-103 bg-amber-50/70' : 'hover:bg-neutral-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-1 mb-1.5">
+                    <span className="w-5 h-5 rounded-full bg-[#FA383E] text-white text-[10px] font-black flex items-center justify-center">
+                      {item.id}
+                    </span>
+                    <span className="text-[10px] font-extrabold text-black">
+                      {item.price}
+                    </span>
+                  </div>
+
+                  <div className="aspect-square w-full bg-neutral-100/70 rounded-lg p-1.5 mb-2 flex items-center justify-center overflow-hidden border border-neutral-200">
+                    <img
+                      src={item.img}
+                      alt={item.name}
+                      referrerPolicy="no-referrer"
+                      crossOrigin="anonymous"
+                      onError={(e) => {
+                        // If external raw URL fails (e.g. private repo), use fallback visual
+                        const target = e.currentTarget;
+                        if (!target.dataset.fallbackTried) {
+                          target.dataset.fallbackTried = 'true';
+                        }
+                      }}
+                      className="max-h-full max-w-full object-contain mix-blend-multiply"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="text-[9px] font-extrabold text-[#FA383E] uppercase tracking-wider truncate">
+                      {item.tag}
+                    </div>
+                    <h5 className="text-[11px] font-black text-black leading-tight truncate mt-0.5">
+                      {item.name}
+                    </h5>
+                    <p className="text-[9.5px] text-neutral-600 font-medium truncate mt-0.5">
+                      {item.category}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </header>
 
       {/* ========================================================

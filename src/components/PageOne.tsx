@@ -1,8 +1,8 @@
 import React from 'react';
 import { FashionSketches } from './FashionSketches';
-import blazerImg from '../assets/images/cropped_pinstripe_blazer_1788270955333.jpg';
-import redHeelsImg from '../assets/images/red_bow_heels_1788270972239.jpg';
-import skirtImg from '../assets/images/pinstripe_wrap_skirt_1788270984147.jpg';
+import blazerImg from '../assets/images/github_shirt_asset_2.jpg';
+import redHeelsImg from '../assets/images/github_shoe_asset_5.jpg';
+import skirtImg from '../assets/images/github_skirt_asset_3.jpg';
 import sofaLifestyleImg from '../assets/images/lifestyle_sofa_laptop_1788271004391.jpg';
 
 interface PageOneProps {
@@ -20,14 +20,21 @@ export const PageOne: React.FC<PageOneProps> = ({
           TOP YELLOW BANNER
           ======================================================== */}
       <header className="bg-[#FBB040] pt-6 pb-8 px-4 sm:px-6 text-center">
-        {/* Top CTA Button */}
-        <div className="mb-4 flex justify-center">
+        {/* Top CTA Buttons */}
+        <div className="mb-4 flex items-center justify-center gap-2">
           <button
             onClick={onOpenPitchModal}
-            id="top-download-pitch-deck-btn"
+            id="top-view-pitch-deck-btn"
             className="bg-[#FA383E] hover:bg-[#e02d33] active:scale-98 transition text-white px-5 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider cursor-pointer shadow-xs"
           >
-            DOWNLOAD PITCH DECK
+            VIEW PITCH DECK
+          </button>
+          <button
+            onClick={onOpenSummaryModal}
+            id="top-view-summary-btn"
+            className="bg-black hover:bg-neutral-800 active:scale-98 transition text-white px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider cursor-pointer shadow-xs"
+          >
+            EXECUTIVE SUMMARY
           </button>
         </div>
 
@@ -115,7 +122,7 @@ export const PageOne: React.FC<PageOneProps> = ({
               id="download-summary-btn"
               className="w-full bg-[#FA383E] hover:bg-[#e02d33] active:scale-98 transition text-white py-2.5 px-3 rounded-xl font-bold text-xs cursor-pointer shadow-xs text-center mt-4"
             >
-              Download Executive Summary (PDF)
+              View & Download Executive Summary (PDF)
             </button>
           </div>
         </div>

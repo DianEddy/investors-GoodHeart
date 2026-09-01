@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Upload, Check, RefreshCw, Image as ImageIcon, Video as VideoIcon } from 'lucide-react';
+import { X, Upload, Check, RefreshCw, Image as ImageIcon, Video as VideoIcon, Link2, Info } from 'lucide-react';
 import { PageThreeAssets } from './PageThree';
 
 export interface PageTwoAssets {
@@ -38,6 +38,7 @@ export const AssetManagerModal: React.FC<AssetManagerModalProps> = ({
   const [localP2, setLocalP2] = useState<PageTwoAssets>(pageTwoAssets);
   const [localP3, setLocalP3] = useState<PageThreeAssets>(pageThreeAssets);
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [showUrlInputs, setShowUrlInputs] = useState(false);
 
   if (!isOpen) return null;
 
@@ -70,7 +71,7 @@ export const AssetManagerModal: React.FC<AssetManagerModalProps> = ({
     setTimeout(() => {
       setSavedSuccess(false);
       onClose();
-    }, 800);
+    }, 700);
   };
 
   return (
@@ -84,7 +85,7 @@ export const AssetManagerModal: React.FC<AssetManagerModalProps> = ({
             </div>
             <div>
               <h3 className="font-extrabold text-neutral-900 text-lg tracking-tight">Pitch Deck Asset Manager</h3>
-              <p className="text-xs text-neutral-800 font-medium">Upload or swap individual images and video assets</p>
+              <p className="text-xs text-neutral-800 font-medium">Upload local files or paste GitHub raw image links</p>
             </div>
           </div>
           <button
@@ -97,26 +98,36 @@ export const AssetManagerModal: React.FC<AssetManagerModalProps> = ({
         </div>
 
         {/* Tab Switcher inside Modal */}
-        <div className="bg-neutral-100 px-6 py-2 border-b border-neutral-200 flex items-center gap-2">
+        <div className="bg-neutral-100 px-6 py-2 border-b border-neutral-200 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setActiveTab('page3')}
+              className={`px-4 py-1.5 rounded-xl font-bold text-xs transition ${
+                activeTab === 'page3'
+                  ? 'bg-black text-white shadow-xs'
+                  : 'text-neutral-600 hover:text-black'
+              }`}
+            >
+              Page 3 Assets (Founder & SPMG Tech)
+            </button>
+            <button
+              onClick={() => setActiveTab('page2')}
+              className={`px-4 py-1.5 rounded-xl font-bold text-xs transition ${
+                activeTab === 'page2'
+                  ? 'bg-black text-white shadow-xs'
+                  : 'text-neutral-600 hover:text-black'
+              }`}
+            >
+              Page 2 Assets (Brands & Collabs)
+            </button>
+          </div>
+
           <button
-            onClick={() => setActiveTab('page3')}
-            className={`px-4 py-1.5 rounded-xl font-bold text-xs transition ${
-              activeTab === 'page3'
-                ? 'bg-black text-white shadow-xs'
-                : 'text-neutral-600 hover:text-black'
-            }`}
+            onClick={() => setShowUrlInputs(!showUrlInputs)}
+            className="text-[11px] font-bold text-neutral-700 hover:text-black flex items-center gap-1 bg-white px-2.5 py-1 rounded-lg border border-neutral-300 transition"
           >
-            Page 3 Assets (Founder & SPMG Tech)
-          </button>
-          <button
-            onClick={() => setActiveTab('page2')}
-            className={`px-4 py-1.5 rounded-xl font-bold text-xs transition ${
-              activeTab === 'page2'
-                ? 'bg-black text-white shadow-xs'
-                : 'text-neutral-600 hover:text-black'
-            }`}
-          >
-            Page 2 Assets (Fashion Brands)
+            <Link2 className="w-3 h-3" />
+            <span>{showUrlInputs ? 'Hide URL Inputs' : 'Direct URL Mode'}</span>
           </button>
         </div>
 
@@ -127,86 +138,169 @@ export const AssetManagerModal: React.FC<AssetManagerModalProps> = ({
                PAGE 3 ASSET CUSTOMIZER
                ======================================================== */
             <div className="space-y-6">
+              {/* GitHub Link Notice with 1-Click Load */}
+              <div className="bg-amber-50 border border-amber-200 p-3.5 rounded-xl flex flex-col gap-2.5 text-xs text-amber-900">
+                <div className="flex items-start gap-2">
+                  <Info className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="font-bold">Connected Repository: DianEddy/investors-GoodHeart/001.media_assets</strong>
+                    <div className="mt-0.5 text-[11px] leading-relaxed text-amber-800">
+                      Target files: <code>Founder_photo_1.jpg</code>, <code>Shirt asset 2.jpg</code>, <code>skirt_asset_3.jpg</code>, <code>bag_asset_4.jpg</code>, <code>shoe_asset_5.jpg</code>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-amber-200/60">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLocalP3(prev => ({
+                        ...prev,
+                        founderHero: 'https://raw.githubusercontent.com/DianEddy/investors-GoodHeart/main/001.media_assets/Founder_photo_1.jpg',
+                        header1: 'https://raw.githubusercontent.com/DianEddy/investors-GoodHeart/main/001.media_assets/Shirt%20asset%202.jpg',
+                        header2: 'https://raw.githubusercontent.com/DianEddy/investors-GoodHeart/main/001.media_assets/skirt_asset_3.jpg',
+                        header3: 'https://raw.githubusercontent.com/DianEddy/investors-GoodHeart/main/001.media_assets/bag_asset_4.jpg',
+                        header4: 'https://raw.githubusercontent.com/DianEddy/investors-GoodHeart/main/001.media_assets/shoe_asset_5.jpg',
+                      }));
+                      setShowUrlInputs(true);
+                    }}
+                    className="bg-black hover:bg-neutral-800 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow-xs cursor-pointer"
+                  >
+                    <Link2 className="w-3.5 h-3.5 text-[#FBB040]" />
+                    <span>Apply Exact GitHub URLs</span>
+                  </button>
+                  <span className="text-[10px] text-amber-800 font-medium">
+                    (Note: Ensure repo is set to <strong>Public</strong> on GitHub so raw images render in browser)
+                  </span>
+                </div>
+              </div>
+
               {/* 4 Header Photos Section */}
               <div>
                 <div className="flex items-center gap-2 mb-3">
                   <ImageIcon className="w-4 h-4 text-neutral-700" />
                   <h4 className="font-bold text-sm text-neutral-900 uppercase tracking-wider">
-                    Four Header Item Photos (Founder & Her Work)
+                    SPMG Tagged Garment Assets (Unveiled Items)
                   </h4>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {/* Item 1 */}
+                  {/* Asset 2 (Shirt/Blazer - Pic 1 on Home) */}
                   <div className="bg-white p-2.5 rounded-xl border border-neutral-200 shadow-xs flex flex-col">
                     <div className="aspect-square rounded-full overflow-hidden border border-neutral-200 mb-2 bg-neutral-100 relative p-1">
-                      <img src={localP3.header1} alt="Cropped Blazer" className="w-full h-full object-contain" />
+                      <img src={localP3.header1} alt="Shirt Asset 2" className="w-full h-full object-contain" />
                     </div>
-                    <span className="text-[11px] font-bold text-neutral-800 truncate mb-1">1. Cropped Blazer</span>
+                    <span className="text-[11px] font-bold text-neutral-800 truncate mb-1">Shirt (Asset 2 / Pic 1)</span>
                     <label className="cursor-pointer bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-[10px] font-semibold py-1 px-2 rounded text-center border border-neutral-300 transition flex items-center justify-center gap-1">
-                      <Upload className="w-3 h-3" /> Upload
+                      <Upload className="w-3 h-3" /> Upload File
                       <input type="file" accept="image/*" className="hidden" onChange={(e) => handleP3FileUpload('header1', e)} />
                     </label>
+                    {showUrlInputs && (
+                      <input
+                        type="text"
+                        placeholder="Paste image URL..."
+                        value={localP3.header1.startsWith('blob:') ? '' : localP3.header1}
+                        onChange={(e) => setLocalP3(prev => ({ ...prev, header1: e.target.value }))}
+                        className="mt-1.5 text-[10px] p-1 border border-neutral-300 rounded bg-white w-full"
+                      />
+                    )}
                   </div>
 
-                  {/* Item 2 */}
+                  {/* Asset 3 (Skirt - Pic 3 on Home) */}
                   <div className="bg-white p-2.5 rounded-xl border border-neutral-200 shadow-xs flex flex-col">
                     <div className="aspect-square rounded-full overflow-hidden border border-neutral-200 mb-2 bg-neutral-100 relative p-1">
-                      <img src={localP3.header2} alt="Wrap Skirt" className="w-full h-full object-contain" />
+                      <img src={localP3.header2} alt="Skirt Asset 3" className="w-full h-full object-contain" />
                     </div>
-                    <span className="text-[11px] font-bold text-neutral-800 truncate mb-1">2. Wrap Skirt</span>
+                    <span className="text-[11px] font-bold text-neutral-800 truncate mb-1">Skirt (Asset 3 / Pic 3)</span>
                     <label className="cursor-pointer bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-[10px] font-semibold py-1 px-2 rounded text-center border border-neutral-300 transition flex items-center justify-center gap-1">
-                      <Upload className="w-3 h-3" /> Upload
+                      <Upload className="w-3 h-3" /> Upload File
                       <input type="file" accept="image/*" className="hidden" onChange={(e) => handleP3FileUpload('header2', e)} />
                     </label>
+                    {showUrlInputs && (
+                      <input
+                        type="text"
+                        placeholder="Paste image URL..."
+                        value={localP3.header2.startsWith('blob:') ? '' : localP3.header2}
+                        onChange={(e) => setLocalP3(prev => ({ ...prev, header2: e.target.value }))}
+                        className="mt-1.5 text-[10px] p-1 border border-neutral-300 rounded bg-white w-full"
+                      />
+                    )}
                   </div>
 
-                  {/* Item 3 */}
+                  {/* Asset 4 (Bag) */}
                   <div className="bg-white p-2.5 rounded-xl border border-neutral-200 shadow-xs flex flex-col">
                     <div className="aspect-square rounded-full overflow-hidden border border-neutral-200 mb-2 bg-neutral-100 relative p-1">
-                      <img src={localP3.header3} alt="Envelope Bag" className="w-full h-full object-contain" />
+                      <img src={localP3.header3} alt="Bag Asset 4" className="w-full h-full object-contain" />
                     </div>
-                    <span className="text-[11px] font-bold text-neutral-800 truncate mb-1">3. Envelope Bag</span>
+                    <span className="text-[11px] font-bold text-neutral-800 truncate mb-1">Bag (Asset 4)</span>
                     <label className="cursor-pointer bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-[10px] font-semibold py-1 px-2 rounded text-center border border-neutral-300 transition flex items-center justify-center gap-1">
-                      <Upload className="w-3 h-3" /> Upload
+                      <Upload className="w-3 h-3" /> Upload File
                       <input type="file" accept="image/*" className="hidden" onChange={(e) => handleP3FileUpload('header3', e)} />
                     </label>
+                    {showUrlInputs && (
+                      <input
+                        type="text"
+                        placeholder="Paste image URL..."
+                        value={localP3.header3.startsWith('blob:') ? '' : localP3.header3}
+                        onChange={(e) => setLocalP3(prev => ({ ...prev, header3: e.target.value }))}
+                        className="mt-1.5 text-[10px] p-1 border border-neutral-300 rounded bg-white w-full"
+                      />
+                    )}
                   </div>
 
-                  {/* Item 4 */}
+                  {/* Asset 5 (Shoe - Pic 2 on Home) */}
                   <div className="bg-white p-2.5 rounded-xl border border-neutral-200 shadow-xs flex flex-col">
                     <div className="aspect-square rounded-full overflow-hidden border border-neutral-200 mb-2 bg-neutral-100 relative p-1">
-                      <img src={localP3.header4} alt="Red Bow Heels" className="w-full h-full object-contain" />
+                      <img src={localP3.header4} alt="Shoe Asset 5" className="w-full h-full object-contain" />
                     </div>
-                    <span className="text-[11px] font-bold text-neutral-800 truncate mb-1">4. Red Bow Heels</span>
+                    <span className="text-[11px] font-bold text-neutral-800 truncate mb-1">Shoe (Asset 5 / Pic 2)</span>
                     <label className="cursor-pointer bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-[10px] font-semibold py-1 px-2 rounded text-center border border-neutral-300 transition flex items-center justify-center gap-1">
-                      <Upload className="w-3 h-3" /> Upload
+                      <Upload className="w-3 h-3" /> Upload File
                       <input type="file" accept="image/*" className="hidden" onChange={(e) => handleP3FileUpload('header4', e)} />
                     </label>
+                    {showUrlInputs && (
+                      <input
+                        type="text"
+                        placeholder="Paste image URL..."
+                        value={localP3.header4.startsWith('blob:') ? '' : localP3.header4}
+                        onChange={(e) => setLocalP3(prev => ({ ...prev, header4: e.target.value }))}
+                        className="mt-1.5 text-[10px] p-1 border border-neutral-300 rounded bg-white w-full"
+                      />
+                    )}
                   </div>
                 </div>
               </div>
 
-              {/* Founder Skyscraper Deck Photo */}
+              {/* Founder Skyscraper Deck Photo (Founder Photo 1) */}
               <div className="bg-white p-3 rounded-xl border border-neutral-200 shadow-xs space-y-2">
                 <div className="flex items-center gap-2 mb-1">
                   <ImageIcon className="w-4 h-4 text-neutral-700" />
                   <div className="text-xs font-bold text-neutral-900 uppercase">
-                    Founder Photo / Video (Onyi on NYC Skyscraper Deck)
+                    Founder Photo 1 (Onyinye on NYC Skyscraper Deck)
                   </div>
                 </div>
                 <div className="aspect-16/9 rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 max-h-48">
                   <img src={localP3.founderHero} alt="Founder in Skyscraper Deck" className="w-full h-full object-cover" />
                 </div>
-                <label className="cursor-pointer bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold py-1.5 px-3 rounded-lg border border-neutral-300 transition inline-flex items-center gap-1.5">
-                  <Upload className="w-3.5 h-3.5" /> Upload Image / Video
-                  <input
-                    type="file"
-                    accept="image/*,video/*"
-                    className="hidden"
-                    onChange={(e) => handleP3FileUpload('founderHero', e)}
-                  />
-                </label>
+                <div className="flex flex-wrap items-center gap-2">
+                  <label className="cursor-pointer bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-xs font-semibold py-1.5 px-3 rounded-lg border border-neutral-300 transition inline-flex items-center gap-1.5">
+                    <Upload className="w-3.5 h-3.5" /> Upload File
+                    <input
+                      type="file"
+                      accept="image/*,video/*"
+                      className="hidden"
+                      onChange={(e) => handleP3FileUpload('founderHero', e)}
+                    />
+                  </label>
+                  {showUrlInputs && (
+                    <input
+                      type="text"
+                      placeholder="Paste founder image/video URL..."
+                      value={localP3.founderHero.startsWith('blob:') ? '' : localP3.founderHero}
+                      onChange={(e) => setLocalP3(prev => ({ ...prev, founderHero: e.target.value }))}
+                      className="text-xs p-1.5 border border-neutral-300 rounded-lg bg-white flex-1 min-w-[200px]"
+                    />
+                  )}
+                </div>
               </div>
 
               {/* Two Videos Section */}
@@ -214,7 +308,7 @@ export const AssetManagerModal: React.FC<AssetManagerModalProps> = ({
                 <div className="flex items-center gap-2 mb-3">
                   <VideoIcon className="w-4 h-4 text-neutral-700" />
                   <h4 className="font-bold text-sm text-neutral-900 uppercase tracking-wider">
-                    Two Videos (Consumer SPMG & Alterations Engine)
+                    Two Page Videos (Consumer SPMG & Alterations Engine)
                   </h4>
                 </div>
 
@@ -265,7 +359,7 @@ export const AssetManagerModal: React.FC<AssetManagerModalProps> = ({
                 <div className="flex items-center gap-2 mb-3">
                   <ImageIcon className="w-4 h-4 text-neutral-700" />
                   <h4 className="font-bold text-sm text-neutral-900 uppercase tracking-wider">
-                    Four Header Images (Founder & Work)
+                    Four Header Images (Brands & Partnerships)
                   </h4>
                 </div>
 
