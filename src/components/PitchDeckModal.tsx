@@ -14,6 +14,13 @@ export const PitchDeckModal: React.FC<PitchDeckModalProps> = ({ isOpen, onClose 
   if (!isOpen) return null;
 
   const handleShare = () => {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      navigator.share({
+        title: "GOODHEART Pitch Presentation",
+        text: "Goodheart unifies AI digital closet management, circular social commerce, and a decentralized artisan network.",
+        url: window.location.href,
+      }).catch(() => {});
+    }
     navigator.clipboard.writeText(window.location.href);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

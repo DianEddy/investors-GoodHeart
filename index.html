@@ -4,11 +4,63 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GOODHEART Pitch Landing Page</title>
-    <meta name="description" content="Goodheart unifies AI digital closet management, circular social commerce, and a decentralized artisan network." />
-    <meta property="og:title" content="GOODHEART Pitch Landing Page" />
-    <meta property="og:description" content="Goodheart unifies AI digital closet management, circular social commerce, and a decentralized artisan network." />
+    <meta name="description" content="Goodheart unifies AI digital closet management, circular social commerce, and a decentralized artisan network. Seed Round Data Room & Pitch Presentation." />
+    
+    <!-- Open Graph / Facebook / LinkedIn / iMessage -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GOODHEART" />
+    <meta property="og:title" content="GOODHEART Pitch Landing Page" />
+    <meta property="og:description" content="Goodheart unifies AI digital closet management, circular social commerce, and a decentralized artisan network. Seed Round Data Room & Pitch Presentation." />
+    <meta property="og:url" content="https://ais-pre-tekxtquehrhzvktdeqraqw-38173274115.us-west2.run.app/" />
+    <meta property="og:image" content="https://ais-pre-tekxtquehrhzvktdeqraqw-38173274115.us-west2.run.app/og-image.jpg" />
+    <meta property="og:image:secure_url" content="https://ais-pre-tekxtquehrhzvktdeqraqw-38173274115.us-west2.run.app/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="675" />
+    <meta property="og:image:alt" content="GOODHEART - Redefining Wardrobe Wellness & Decentralized Fashion Tech" />
+
+    <!-- Twitter / X Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GOODHEART Pitch Landing Page" />
+    <meta name="twitter:description" content="Goodheart unifies AI digital closet management, circular social commerce, and a decentralized artisan network. Seed Round Data Room & Pitch Presentation." />
+    <meta name="twitter:image" content="https://ais-pre-tekxtquehrhzvktdeqraqw-38173274115.us-west2.run.app/og-image.jpg" />
+    <meta name="twitter:image:alt" content="GOODHEART - Redefining Wardrobe Wellness & Decentralized Fashion Tech" />
+
+    <!-- Mobile & iMessage App Touch Icon -->
+    <link rel="image_src" href="https://ais-pre-tekxtquehrhzvktdeqraqw-38173274115.us-west2.run.app/og-image.jpg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/jpeg" href="/og-image.jpg" />
+
+    <script>
+      // Automatically keep meta tags in sync with active domain for seamless sharing across any preview URL
+      (function() {
+        try {
+          if (typeof window !== 'undefined' && window.location && window.location.origin) {
+            var origin = window.location.origin;
+            var imageUrl = origin + '/og-image.jpg';
+            var pageUrl = window.location.href;
+
+            var setMeta = function(property, content, isName) {
+              var selector = isName ? 'meta[name="' + property + '"]' : 'meta[property="' + property + '"]';
+              var el = document.querySelector(selector);
+              if (el) {
+                el.setAttribute('content', content);
+              }
+            };
+
+            setMeta('og:image', imageUrl, false);
+            setMeta('og:image:secure_url', imageUrl, false);
+            setMeta('og:url', pageUrl, false);
+            setMeta('twitter:image', imageUrl, true);
+
+            var imgLink = document.querySelector('link[rel="image_src"]');
+            if (imgLink) {
+              imgLink.setAttribute('href', imageUrl);
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

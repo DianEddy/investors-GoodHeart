@@ -9,6 +9,7 @@ import { CollaborateModal } from './components/CollaborateModal';
 import { AssetManagerModal, PageTwoAssets } from './components/AssetManagerModal';
 import { PageThreeAssets } from './components/PageThree';
 import { GatedDocumentsModal } from './components/GatedDocumentsModal';
+import { ShareModal } from './components/ShareModal';
 import { Share2, Printer, Check, Image as ImageIcon, BarChart3, Sparkles, ShieldCheck, Lock, Eye } from 'lucide-react';
 
 // Default Assets for Page 2
@@ -62,15 +63,14 @@ export function App() {
   const [p2Assets, setP2Assets] = useState<PageTwoAssets>(initialPageTwoAssets);
   const [p3Assets, setP3Assets] = useState<PageThreeAssets>(initialPageThreeAssets);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   const handlePrint = () => {
     window.print();
   };
 
   const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopiedLink(true);
-    setTimeout(() => setCopiedLink(false), 2000);
+    setIsShareModalOpen(true);
   };
 
   const handleOpenCollaborate = (tier?: string) => {
@@ -280,6 +280,11 @@ export function App() {
         isOpen={isGatedDocsOpen}
         onClose={() => setIsGatedDocsOpen(false)}
         initialDocumentId={gatedDocInitialId}
+      />
+
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
       />
 
       <PitchDeckModal

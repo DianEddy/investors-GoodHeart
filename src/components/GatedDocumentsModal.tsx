@@ -1135,6 +1135,13 @@ export const GatedDocumentsModal: React.FC<GatedDocumentsModalProps> = ({
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => {
+                          if (typeof navigator !== 'undefined' && navigator.share) {
+                            navigator.share({
+                              title: `GOODHEART — ${selectedDoc.title}`,
+                              text: selectedDoc.description,
+                              url: window.location.href,
+                            }).catch(() => {});
+                          }
                           navigator.clipboard.writeText(window.location.href);
                           setCopiedLink(true);
                           setTimeout(() => setCopiedLink(false), 2000);
